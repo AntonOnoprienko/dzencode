@@ -1,0 +1,13 @@
+.product-filter {
+  &__label {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.7;
+  }
+
+  &__select {
+    min-width: 300px; // или auto, в зависимости от макета
+  }
+}
