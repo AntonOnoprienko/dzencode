@@ -15,7 +15,8 @@ interface Props {
 }
 
 const OrdersChart = dynamic(() => import('./OrdersChart'), {
-  ssr: false, loading: () => (
+  ssr: false,
+  loading: () => (
     <div>
       <span
         className="spinner-border spinner-border-sm text-success me-3"
@@ -28,7 +29,7 @@ const OrdersChart = dynamic(() => import('./OrdersChart'), {
 
 export const OrdersList: React.FC<Props> = ({ items }) => {
   const dispatch = useAppDispatch();
-  const ordersState = useAppSelector(state => state.orders.orders);
+  const ordersState = useAppSelector((state) => state.orders.orders);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [deleteOrderModal, setDeleteOrderModal] = useState<Order | null>(null);
   const [showChart, setShowChart] = useState<boolean>(false);
@@ -40,12 +41,11 @@ export const OrdersList: React.FC<Props> = ({ items }) => {
   }, [items, dispatch]);
 
   const orders = deserializeOrders(ordersState);
-  const chartOrders = orders.map(order => ({
+  const chartOrders = orders.map((order) => ({
     id: order.id,
     name: order.title,
-    totalUSD: order.products?.reduce((sum, p) => sum + p.priceUSD, 0) || 0
+    totalUSD: order.products?.reduce((sum, p) => sum + p.priceUSD, 0) || 0,
   }));
-
 
   if (!items) return null;
 
@@ -76,21 +76,24 @@ export const OrdersList: React.FC<Props> = ({ items }) => {
 
         {showChart && <OrdersChart orders={chartOrders} />}
 
-        {!showChart && <div className="orders-list flex-grow-1">
-          {orders.map((order) => (
-            <OrderItem
-              key={order.id}
-              order={order}
-              selected={selectedOrder?.id === order.id}
-              anySelected={selectedOrder !== null}
-              onSelect={() =>
-                setSelectedOrder(selectedOrder?.id === order.id ? null : order)
-              }
-              onDelete={() => setDeleteOrderModal(order)}
-            />
-          ))}
-        </div>
-        }
+        {!showChart && (
+          <div className="orders-list flex-grow-1">
+            {orders.map((order) => (
+              <OrderItem
+                key={order.id}
+                order={order}
+                selected={selectedOrder?.id === order.id}
+                anySelected={selectedOrder !== null}
+                onSelect={() =>
+                  setSelectedOrder(
+                    selectedOrder?.id === order.id ? null : order,
+                  )
+                }
+                onDelete={() => setDeleteOrderModal(order)}
+              />
+            ))}
+          </div>
+        )}
 
         {selectedOrder && (
           <OrderDetailsPanel

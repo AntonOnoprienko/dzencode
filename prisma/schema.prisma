@@ -33,3 +33,11 @@ model Product {
   order        Order    @relation(fields: [orderId], references: [id])
   date         DateTime @default(now())
 }
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  name     String
+  createdAt DateTime @default(now())
+}

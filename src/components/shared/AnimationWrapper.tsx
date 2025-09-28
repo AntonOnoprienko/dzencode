@@ -17,7 +17,7 @@ export const AnimationWrapper: React.FC<Props> = ({ children }) => {
     exit: { opacity: 0, x: -50, scale: 0.98 },
   };
 
-  const pageTransition = {
+  const pageTransition: import('motion').Transition = {
     type: 'tween',
     ease: 'easeInOut',
     duration: 0.4,

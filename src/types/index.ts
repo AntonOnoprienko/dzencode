@@ -49,19 +49,19 @@ export interface ProductState {
   photo: string | null;
   title: string;
   type: string;
-  specification: string | null
-  guaranteeStart: string; 
-  guaranteeEnd: string; 
+  specification: string | null;
+  guaranteeStart: string;
+  guaranteeEnd: string;
   priceUSD: number;
   priceUAH: number;
   orderId: number;
-  date: string;          
+  date: string;
 }
 
 export interface OrderState {
   id: number;
   title: string;
   description?: string | null;
-  date: string;           
+  date: string;
   products: ProductState[];
 }

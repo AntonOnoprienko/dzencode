@@ -1,11 +1,10 @@
-
 'use client';
 
 import dynamic from 'next/dynamic';
 import React, { ReactNode } from 'react';
 
 const AnimationWrapper = dynamic(
-  () => import('../AnimationWrapper').then(mod => mod.AnimationWrapper),
+  () => import('../AnimationWrapper').then((mod) => mod.AnimationWrapper),
   {
     ssr: false,
     loading: () => (
@@ -17,7 +16,7 @@ const AnimationWrapper = dynamic(
         <span>Loading...</span>
       </div>
     ),
-  }
+  },
 );
 
 interface Props {

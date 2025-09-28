@@ -8,7 +8,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { ProductItem } from './ProductItem';
 import { ProductWithOrder } from '@/types';
 
-
 jest.mock('@/styles/components/product-item.scss', () => ({}));
 
 jest.mock('next/image', () => ({
@@ -64,7 +63,9 @@ describe('ProductItem', () => {
   });
 
   it('adds "shadow" class when selected', () => {
-    const { container } = render(<ProductItem product={mockProduct} selected />);
+    const { container } = render(
+      <ProductItem product={mockProduct} selected />,
+    );
     expect(container.firstChild).toHaveClass('shadow');
   });
 

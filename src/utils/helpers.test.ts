@@ -6,7 +6,6 @@ import {
 } from './helpers';
 import { Order, OrderState } from '@/types';
 
-
 describe('formatGuaranteeDate', () => {
   it('formats Date object correctly', () => {
     const date = new Date('2025-09-28T00:00:00Z');
@@ -18,7 +17,6 @@ describe('formatGuaranteeDate', () => {
     expect(formatGuaranteeDate(dateStr, 'dd.MM.yyyy')).toBe('28.09.2025');
   });
 });
-
 
 describe('getOrderSums', () => {
   it('calculates sums in USD and UAH', () => {
@@ -37,7 +35,6 @@ describe('getOrderSums', () => {
     expect(getOrderSums([])).toEqual({ sumUSD: 0, sumUAH: 0 });
   });
 });
-
 
 describe('serializeOrders / deserializeOrders', () => {
   const mockOrders: Order[] = [
@@ -70,7 +67,9 @@ describe('serializeOrders / deserializeOrders', () => {
     const serialized: OrderState[] = serializeOrders(mockOrders);
 
     expect(serialized[0].date).toBe('2025-09-28T12:00:00.000Z');
-    expect(serialized[0].products[0].guaranteeStart).toBe('2025-01-01T00:00:00.000Z');
+    expect(serialized[0].products[0].guaranteeStart).toBe(
+      '2025-01-01T00:00:00.000Z',
+    );
     expect(serialized[0].products[0].title).toBe('Product 1');
   });
 

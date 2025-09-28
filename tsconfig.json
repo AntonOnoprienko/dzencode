@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/ui/SearchInput/SearchInput.module.sass"
-, "jest.config.js"  ],
+    "src/components/ui/SearchInput/SearchInput.module.sass",
+    "jest.config.js"
+  ],
   "exclude": ["node_modules"]
 }

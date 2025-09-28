@@ -6,7 +6,6 @@ import { NavigationMenu, TopMenu } from '@/components/layout';
 import { Providers } from '@/store/providers';
 import { AnimationDynamic } from '@/components/shared/dynamics/AnimationDynamic';
 
-
 const roboto = Roboto({
   variable: '--font-roboto',
   subsets: ['latin', 'cyrillic'],

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
@@ -10,28 +9,33 @@ import {
   Tooltip,
   Legend,
   ChartOptions,
-  ChartData
+  ChartData,
 } from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 interface Props {
   orders: {
     id: number;
     name: string;
     totalUSD: number;
-  }[]
+  }[];
 }
 
 const OrdersChart: React.FC<Props> = ({ orders }) => {
-  
   const data: ChartData<'bar', number[], string> = {
-    labels: orders.map(order => order.name),
+    labels: orders.map((order) => order.name),
     datasets: [
       {
         label: 'Сумма прихода (USD)',
-        data: orders.map(order => order.totalUSD),
+        data: orders.map((order) => order.totalUSD),
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
       },
     ],

@@ -28,19 +28,16 @@ export const OrderItem: React.FC<OrderItemProps> = ({
   return (
     <div
       onClick={(e) => {
-              e.stopPropagation();
-              onSelect();
-            }}
+        e.stopPropagation();
+        onSelect();
+      }}
       className={`order-item my-3 ${selected ? 'shadow' : ''} ${anySelected ? 'justify-content-start' : ''}`}
     >
       {!anySelected && <h2 className="order-item__title">{order.title}</h2>}
 
       <div className="d-flex align-items-center">
         <div className="order-item__icon">
-          <ListTask
-            size={24}
-            
-          />
+          <ListTask size={24} />
         </div>
         <div>
           <p className="order-item__quantity">{order.products.length}</p>
@@ -60,10 +57,15 @@ export const OrderItem: React.FC<OrderItemProps> = ({
         </>
       )}
 
-      {selected && <div className="order-item__selected" onClick={(e) => {
-        e.stopPropagation();
-        onSelect();
-      }}></div>}
+      {selected && (
+        <div
+          className="order-item__selected"
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelect();
+          }}
+        ></div>
+      )}
     </div>
   );
 };

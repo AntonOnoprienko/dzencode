@@ -2,12 +2,17 @@ import { renderHook, waitFor } from '@testing-library/react';
 import { useOrders } from './use-orders';
 import { Order, Product } from '@/types';
 
-
 global.fetch = jest.fn();
 
 describe('useOrders', () => {
   const mockOrders: Order[] = [
-    { id: 1, title: 'Order 1', description: '', date: new Date('2025-09-28T12:00:00Z'), products: [] },
+    {
+      id: 1,
+      title: 'Order 1',
+      description: '',
+      date: new Date('2025-09-28T12:00:00Z'),
+      products: [],
+    },
   ];
 
   const mockProducts: Product[] = [
@@ -51,11 +56,9 @@ describe('useOrders', () => {
   it('should fetch orders and products and combine them', async () => {
     const { result } = renderHook(() => useOrders());
 
-    
     expect(result.current.loading).toBe(true);
     expect(result.current.orders).toHaveLength(0);
 
-    
     await waitFor(() => {
       expect(result.current.loading).toBe(false);
     });
