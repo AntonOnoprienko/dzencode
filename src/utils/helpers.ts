@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Order, OrderState } from '@/types';
 import { format } from 'date-fns';
 
 export const formatGuaranteeDate = (
@@ -15,32 +15,28 @@ export const getOrderSums = (
   sumUAH: products.reduce((acc, p) => acc + p.priceUAH, 0),
 });
 
-// Сериализация: Date → string
-export const serializeDates = <T>(obj: T): any => {
-  if (obj instanceof Date) return obj.toISOString();
-  if (Array.isArray(obj)) return obj.map(serializeDates);
-  if (obj && typeof obj === 'object') {
-    return Object.fromEntries(
-      Object.entries(obj).map(([k, v]) => [k, serializeDates(v)])
-    );
-  }
-  return obj;
-};
+export const deserializeOrders = (orders: OrderState[]): Order[] =>
+  orders.map((order): Order => ({
+    ...order,
+    date: new Date(order.date),
+    products: order.products.map((p): Order['products'][number] => ({
+      ...p,
+      guaranteeStart: new Date(p.guaranteeStart),
+      guaranteeEnd: new Date(p.guaranteeEnd),
+      date: new Date(p.date),
+    })),
+  }));
 
-// Десериализация: string → Date
-export const deserializeDates = <T>(obj: any): T => {
-  if (typeof obj === 'string' && !isNaN(Date.parse(obj))) {
-    return new Date(obj) as unknown as T;
-  }
-  if (Array.isArray(obj)) return obj.map(deserializeDates) as unknown as T;
-  if (obj && typeof obj === 'object') {
-    return Object.fromEntries(
-      Object.entries(obj).map(([k, v]) => [k, deserializeDates(v)])
-    ) as T;
-  }
-  return obj as T;
-};
-
-
+export const serializeOrders = (orders: Order[]): OrderState[] =>
+  orders.map((order): OrderState => ({
+    ...order,
+    date: order.date.toISOString(),
+    products: order.products.map((p): OrderState['products'][number] => ({
+      ...p,
+      guaranteeStart: p.guaranteeStart.toISOString(),
+      guaranteeEnd: p.guaranteeEnd.toISOString(),
+      date: p.date.toISOString(),
+    })),
+  }));
 
 

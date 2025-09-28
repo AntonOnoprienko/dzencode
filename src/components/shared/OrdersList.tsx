@@ -1,19 +1,51 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Order } from '@/types';
 import { DeleteOrderModal, OrderDetailsPanel, OrderItem } from '.';
 import '@/styles/components/orders-list.scss';
 import { AddButton } from '../ui';
+import { deleteOrder, setOrders } from '@/store/slices/orders-slice';
+import { deserializeOrders, serializeOrders } from '@/utils/helpers';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import dynamic from 'next/dynamic';
 
 interface Props {
   items: Order[];
-  onDelete?: (id: number) => void;
 }
 
-export const OrdersList: React.FC<Props> = ({ items, onDelete = () => {} }) => {
+const OrdersChart = dynamic(() => import('./OrdersChart'), {
+  ssr: false, loading: () => (
+    <div>
+      <span
+        className="spinner-border spinner-border-sm text-success me-3"
+        role="status"
+      ></span>
+      <span>Loading...</span>
+    </div>
+  ),
+});
+
+export const OrdersList: React.FC<Props> = ({ items }) => {
+  const dispatch = useAppDispatch();
+  const ordersState = useAppSelector(state => state.orders.orders);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
-  const [deleteOrder, setDeleteOrder] = useState<Order | null>(null);
+  const [deleteOrderModal, setDeleteOrderModal] = useState<Order | null>(null);
+  const [showChart, setShowChart] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (items?.length) {
+      dispatch(setOrders(serializeOrders(items)));
+    }
+  }, [items, dispatch]);
+
+  const orders = deserializeOrders(ordersState);
+  const chartOrders = orders.map(order => ({
+    id: order.id,
+    name: order.title,
+    totalUSD: order.products?.reduce((sum, p) => sum + p.priceUSD, 0) || 0
+  }));
+
 
   if (!items) return null;
 
@@ -21,23 +53,31 @@ export const OrdersList: React.FC<Props> = ({ items, onDelete = () => {} }) => {
     <div className="px-5 py-3">
       <div className="d-flex align-items-center gap-2 mb-5">
         <AddButton size="small" />
-        <h1>Приходы / {items.length}</h1>
+        <h1>Приходы / {orders.length}</h1>
+        <button
+          className="btn btn-success ms-5"
+          onClick={() => setShowChart((prev) => !prev)}
+        >
+          {showChart ? 'Скрыть график' : 'Показать график'}
+        </button>
       </div>
 
       <div className="d-flex">
         <DeleteOrderModal
-          order={deleteOrder}
-          show={!!deleteOrder}
-          onHide={() => setDeleteOrder(null)}
+          order={deleteOrderModal}
+          show={!!deleteOrderModal}
+          onHide={() => setDeleteOrderModal(null)}
           onDelete={(id) => {
-            onDelete(id);
-            setDeleteOrder(null);
+            dispatch(deleteOrder(id));
+            setDeleteOrderModal(null);
             if (selectedOrder?.id === id) setSelectedOrder(null);
           }}
         />
 
-        <div className="orders-list flex-grow-1">
-          {items.map((order) => (
+        {showChart && <OrdersChart orders={chartOrders} />}
+
+        {!showChart && <div className="orders-list flex-grow-1">
+          {orders.map((order) => (
             <OrderItem
               key={order.id}
               order={order}
@@ -46,10 +86,11 @@ export const OrdersList: React.FC<Props> = ({ items, onDelete = () => {} }) => {
               onSelect={() =>
                 setSelectedOrder(selectedOrder?.id === order.id ? null : order)
               }
-              onDelete={() => setDeleteOrder(order)}
+              onDelete={() => setDeleteOrderModal(order)}
             />
           ))}
         </div>
+        }
 
         {selectedOrder && (
           <OrderDetailsPanel

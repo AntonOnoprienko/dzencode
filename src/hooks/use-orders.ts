@@ -16,10 +16,9 @@ export const useOrders = () => {
         const resProducts = await fetch('/api/products');
         const productsData: Product[] = await resProducts.json();
 
-        // Вложение продуктов в соответствующие заказы
         const ordersWithProducts = ordersData.map((order) => ({
           ...order,
-          products: productsData.filter((p) => p.order === order.id),
+          products: productsData.filter((p) => p.orderId === order.id),
         }));
 
         setOrders(ordersWithProducts);
