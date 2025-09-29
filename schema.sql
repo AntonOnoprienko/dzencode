@@ -1,0 +1,34 @@
+
+CREATE TABLE `Order` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(255) NOT NULL,
+  `description` TEXT,
+  `date` DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE `Product` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `serialNumber` INT NOT NULL,
+  `isNew` BOOLEAN NOT NULL,
+  `photo` VARCHAR(255),
+  `title` VARCHAR(255) NOT NULL,
+  `type` VARCHAR(255) NOT NULL,
+  `specification` TEXT,
+  `guaranteeStart` DATETIME NOT NULL,
+  `guaranteeEnd` DATETIME NOT NULL,
+  `priceUSD` FLOAT NOT NULL,
+  `priceUAH` FLOAT NOT NULL,
+  `orderId` INT NOT NULL,
+  `date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`orderId`) REFERENCES `Order`(`id`) ON DELETE CASCADE
+);
+
+
+CREATE TABLE `User` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `email` VARCHAR(255) NOT NULL UNIQUE,
+  `password` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP
+);

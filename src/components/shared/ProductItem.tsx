@@ -34,7 +34,6 @@ export const ProductItem: React.FC<ProductItemProps> = ({
     product.guaranteeEnd,
     'dd / MM / yy',
   );
-  console.log(product);
 
   return (
     <div

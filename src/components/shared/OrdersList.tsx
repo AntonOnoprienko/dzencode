@@ -15,7 +15,7 @@ interface Props {
   items: Order[];
 }
 
-const OrdersChart = dynamic(() => import('./OrdersChart'), {
+const OrdersChart = dynamic(() => import('./OrdersChart').then(mod => mod.OrdersChart), {
   ssr: false,
   loading: () => (
     <div>
@@ -53,7 +53,7 @@ export const OrdersList: React.FC<Props> = ({ items }) => {
 
   return (
     <div className="px-5 py-3">
-      <div className="d-flex align-items-center gap-2 mb-5">
+      <div className="d-flex align-items-center gap-2 mb-3">
         <AddButton size="small" />
         <h1>
           {t('orders_title')} / {orders.length}

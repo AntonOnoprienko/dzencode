@@ -29,7 +29,7 @@ interface Props {
   }[];
 }
 
-const OrdersChart: React.FC<Props> = ({ orders }) => {
+export const OrdersChart: React.FC<Props> = ({ orders }) => {
   const data: ChartData<'bar', number[], string> = {
     labels: orders.map((order) => order.name),
     datasets: [
@@ -43,6 +43,7 @@ const OrdersChart: React.FC<Props> = ({ orders }) => {
 
   const options: ChartOptions<'bar'> = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top',
@@ -54,7 +55,11 @@ const OrdersChart: React.FC<Props> = ({ orders }) => {
     },
   };
 
-  return <Bar data={data} options={options} />;
+  return (
+    <div style={{ width: '600px', height: '400px' }}>
+      <Bar data={data} options={options} />
+    </div>
+  );
 };
 
-export default OrdersChart;
+
