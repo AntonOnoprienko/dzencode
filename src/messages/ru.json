@@ -1,0 +1,20 @@
+{
+  "navigation": {
+    "orders": "Приходы",
+    "products": "Продукты"
+  },
+  "orders": {
+    "orders_title": "Приходы",
+    "chart_show": "Показать график",
+    "chart_hide": "Скрыть график"
+  },
+  "topmenu": {
+    "greeting": "Привет",
+    "logout": "Выйти",
+    "register": "Регистрация"
+  },
+  "products": {
+    "title": "Продукты",
+    "selector": "Все типы"
+  }
+}

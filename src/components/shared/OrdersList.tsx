@@ -9,6 +9,7 @@ import { deleteOrder, setOrders } from '@/store/slices/orders-slice';
 import { deserializeOrders, serializeOrders } from '@/utils/helpers';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import dynamic from 'next/dynamic';
+import { useTranslations } from 'next-intl';
 
 interface Props {
   items: Order[];
@@ -33,6 +34,7 @@ export const OrdersList: React.FC<Props> = ({ items }) => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [deleteOrderModal, setDeleteOrderModal] = useState<Order | null>(null);
   const [showChart, setShowChart] = useState<boolean>(false);
+  const t = useTranslations('orders');
 
   useEffect(() => {
     if (items?.length) {
@@ -53,12 +55,14 @@ export const OrdersList: React.FC<Props> = ({ items }) => {
     <div className="px-5 py-3">
       <div className="d-flex align-items-center gap-2 mb-5">
         <AddButton size="small" />
-        <h1>Приходы / {orders.length}</h1>
+        <h1>
+          {t('orders_title')} / {orders.length}
+        </h1>
         <button
           className="btn btn-success ms-5"
           onClick={() => setShowChart((prev) => !prev)}
         >
-          {showChart ? 'Скрыть график' : 'Показать график'}
+          {showChart ? t('chart_hide') : t('chart_show')}
         </button>
       </div>
 

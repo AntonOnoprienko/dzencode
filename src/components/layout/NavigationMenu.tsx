@@ -5,13 +5,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { GearFill } from 'react-bootstrap-icons';
+import { useTranslations } from 'next-intl';
 
 export const NavigationMenu = () => {
   const pathname = usePathname();
+  const t = useTranslations('navigation');
 
   const links = [
-    { href: '/orders', label: 'Orders' },
-    { href: '/products', label: 'Products' },
+    { href: '/orders', label: t('orders') },
+    { href: '/products', label: t('products') },
   ];
 
   return (

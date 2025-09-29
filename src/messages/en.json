@@ -1,0 +1,20 @@
+{
+  "navigation": {
+    "orders": "Orders",
+    "products": "Products"
+  },
+  "orders": {
+    "orders_title": "Orders",
+    "chart_show": "Show Chart",
+    "chart_hide": "Hide Chart"
+  },
+  "topmenu": {
+    "greeting": "Hello",
+    "logout": "Logout",
+    "register": "Register"
+  },
+  "products": {
+    "title": "Products",
+    "selector": "All types"
+  }
+}

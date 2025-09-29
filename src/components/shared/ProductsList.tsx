@@ -5,6 +5,7 @@ import { ProductWithOrder } from '@/types';
 import { AddButton } from '../ui';
 import { ProductItem } from './ProductItem';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface Props {
   items: ProductWithOrder[];
@@ -14,6 +15,7 @@ export const ProductsList = ({ items }: Props) => {
   const [selectedProduct, setSelectedProduct] =
     useState<ProductWithOrder | null>(null);
   const [filterType, setFilterType] = useState<string>('');
+  const t = useTranslations('products');
 
   const productTypes = Array.from(new Set(items.map((p) => p.type)));
 
@@ -23,9 +25,11 @@ export const ProductsList = ({ items }: Props) => {
 
   return (
     <div className="px-5 py-3">
-      <div className="d-flex align-items-center gap-2 mb-3">
+      <div className="d-flex align-items-center gap-2 mb-5">
         <AddButton size="small" />
-        <h1>Продукты / {filteredItems.length}</h1>
+        <h1>
+          {t('title')} / {filteredItems.length}
+        </h1>
         <div className="product-filter d-flex align-items-center gap-2 ms-5">
           <span className="product-filter__label">Тип:</span>
           <select
@@ -33,7 +37,7 @@ export const ProductsList = ({ items }: Props) => {
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
           >
-            <option value="">All types</option>
+            <option value="">{t('selector')}</option>
             <option value="laptops">Laptops</option>
             {productTypes.map((type) => (
               <option key={type} value={type}>

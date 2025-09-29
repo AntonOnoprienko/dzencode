@@ -5,13 +5,15 @@ import { ActiveSessions, Clock, Logo, SearchInput } from '@/components/ui';
 import { useSocket } from '@/hooks';
 import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { RegisterModal } from '../shared';
+import { LanguageSwitcher, RegisterModal } from '../shared';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setUser, logout } from '@/store/slices/user-slice';
+import { useTranslations } from 'next-intl';
 
-export const TopMenu = () => {
+export const TopMenu = ({ locale }: { locale: string }) => {
   const { activeSessions } = useSocket();
   const [showRegister, setShowRegister] = useState(false);
+  const t = useTranslations('topmenu');
 
   const dispatch = useAppDispatch();
   const userName = useAppSelector((state) => state.user.name);
@@ -38,18 +40,19 @@ export const TopMenu = () => {
         {userName ? (
           <div className="d-flex gap-2 align-items-center">
             <span>
-              Привет,{' '}
+              {t('greeting')},{' '}
               {userName.length > 12 ? userName.slice(0, 12) + '…' : userName}
             </span>
             <Button variant="danger" onClick={handleLogout}>
-              Выйти
+              {t('logout')}
             </Button>
           </div>
         ) : (
           <Button variant="success" onClick={() => setShowRegister(true)}>
-            Регистрация
+            {t('register')}
           </Button>
         )}
+        <LanguageSwitcher locale={locale} />
         <div className="d-flex align-items-center gap-3">
           <ActiveSessions count={activeSessions} />
           <Clock />

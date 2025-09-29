@@ -8,3 +8,5 @@ export { FormattedPrice } from './FormattedPrice';
 export { AnimationWrapper } from './AnimationWrapper';
 export { RegisterForm } from './RegisterForm';
 export { RegisterModal } from './RegisterModal';
+export { LanguageSwitcher } from './LanguageSwitcher';
+export { MyMap } from './MyMap';
